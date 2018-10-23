@@ -1,9 +1,13 @@
 # This file contains all the functions of the game to keep the main loop fresh
 # and short
 import pygame, sys
+from Obstacle import Obstacle
+
+NEW_OBS = pygame.USEREVENT+1
+pygame.time.set_timer(NEW_OBS, 1250)
 
 
-def check_events(bird):
+def check_events(bird, obstacles, screen):
     from game import game
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -15,3 +19,7 @@ def check_events(bird):
                     bird.rise()
                 else:
                     bird.rise()
+        elif event.type == NEW_OBS and game.GAME_STARTED:
+            # Spawn obstacle every 3 seconds
+            new_obstacle = Obstacle(screen)
+            obstacles.add(new_obstacle)
