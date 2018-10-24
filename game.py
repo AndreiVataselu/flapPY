@@ -14,6 +14,7 @@ class Game:
         pygame.display.set_caption("flapPY")
         self.bird = Bird(self.screen)
         self.obstacles = Group()
+        self.score = 0
 
     def run_game(self):
         while True:
@@ -27,9 +28,15 @@ class Game:
                 # Bird only starts to fall if the game started
                 self.bird.fall()
 
+            gf.check_collision(self.bird, self.obstacles)
+
             for obstacle in self.obstacles:
                 obstacle.run()
                 obstacle.draw()
+
+                if obstacle.rect1.x < -10:
+                    # Remove any obstacle that has been out of the screen.
+                    self.obstacles.remove(obstacle)
 
             self.bird.draw()
             pygame.display.flip()

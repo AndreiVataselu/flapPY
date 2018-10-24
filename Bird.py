@@ -15,7 +15,6 @@ class Bird:
         # Create the rect of the bird
         self.rect = pygame.Rect(self.x, self.y, self.width, self.width)
 
-
     def draw(self):
         # Draws the bird every frame
         pygame.draw.circle(self.screen, self.color, [self.x, self.y], self.width)

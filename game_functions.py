@@ -3,8 +3,8 @@
 import pygame, sys
 from Obstacle import Obstacle
 
-NEW_OBS = pygame.USEREVENT+1
-pygame.time.set_timer(NEW_OBS, 1250)
+NEW_OBS = pygame.USEREVENT + 1
+pygame.time.set_timer(NEW_OBS, 1350)
 
 
 def check_events(bird, obstacles, screen):
@@ -23,3 +23,10 @@ def check_events(bird, obstacles, screen):
             # Spawn obstacle every 3 seconds
             new_obstacle = Obstacle(screen)
             obstacles.add(new_obstacle)
+
+
+def check_collision(bird, obstacles):
+    for obstacle in obstacles:
+        if obstacle.rect1.x <= bird.rect.x + bird.width:
+            if bird.y < obstacle.rect1.height or bird.y > obstacle.rect2.y:
+                print("game lost")
