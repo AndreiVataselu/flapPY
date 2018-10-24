@@ -23,6 +23,9 @@ class Obstacle(Sprite):
         self.rect1 = pygame.Rect(self.x, self.y1, self.width, self.random)
         self.rect2 = pygame.Rect(self.x, self.y2, self.width, 600-self.y2)
 
+        # Passing flag. If the bird passed the obstacle, give score 1.
+        self.passed = False
+
     def run(self):
         self.rect1.x -= 5
         self.rect2.x -= 5
@@ -30,3 +33,9 @@ class Obstacle(Sprite):
     def draw(self):
         pygame.draw.rect(self.screen, self.color, self.rect1)
         pygame.draw.rect(self.screen, self.color, self.rect2)
+
+    def score(self):
+        if not self.passed:
+            self.passed = True
+            return 1
+        return 0

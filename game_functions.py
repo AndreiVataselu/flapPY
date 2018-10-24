@@ -17,16 +17,28 @@ def check_events(bird, obstacles, screen):
                 if not game.GAME_STARTED:
                     game.GAME_STARTED = True
                     bird.rise()
-                else:
+                elif not game.GAME_LOST:
                     bird.rise()
-        elif event.type == NEW_OBS and game.GAME_STARTED:
+        elif event.type == NEW_OBS and game.GAME_STARTED and not game.GAME_LOST:
             # Spawn obstacle every 3 seconds
             new_obstacle = Obstacle(screen)
             obstacles.add(new_obstacle)
 
 
 def check_collision(bird, obstacles):
+    from game import game
+    if not game.GAME_LOST:
+        for obstacle in obstacles:
+            # Check if bird is touching any of the pipes
+            if obstacle.rect1.x <= bird.rect.x + bird.width:
+                if bird.y - 7 < obstacle.rect1.height or bird.y + 7 > obstacle.rect2.y:
+                    game.GAME_LOST = True
+                    bird.falling_speed = 25
+                    print("Game lost!")
+
+
+def score_update(obstacles):
+    from game import game
     for obstacle in obstacles:
-        if obstacle.rect1.x <= bird.rect.x + bird.width:
-            if bird.y < obstacle.rect1.height or bird.y > obstacle.rect2.y:
-                print("game lost")
+        if obstacle.rect1.x < 69 and not game.GAME_LOST:
+            game.score += obstacle.score()

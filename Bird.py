@@ -12,6 +12,7 @@ class Bird:
 
         self.color = (0, 0, 0)
 
+        self.falling_speed = 5
         # Create the rect of the bird
         self.rect = pygame.Rect(self.x, self.y, self.width, self.width)
 
@@ -21,8 +22,8 @@ class Bird:
 
     def fall(self):
         # Causes the bird to fall if SPACE KEY is not pressed.
-        self.y += 3
+        self.y += self.falling_speed
 
     def rise(self):
         # Triggers whenever the SPACE KEY is pressed.
-        self.y -= 45
+        self.y -= 50

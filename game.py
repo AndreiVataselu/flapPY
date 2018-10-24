@@ -15,6 +15,9 @@ class Game:
         self.bird = Bird(self.screen)
         self.obstacles = Group()
         self.score = 0
+        self.GAME_LOST = False
+        self.font = pygame.font.Font("impact.ttf", 55)
+        self.shadowFont = pygame.font.Font("impact.ttf", 58)
 
     def run_game(self):
         while True:
@@ -29,7 +32,9 @@ class Game:
                 self.bird.fall()
 
             gf.check_collision(self.bird, self.obstacles)
+            gf.score_update(self.obstacles)
 
+            # Draws all the objects
             for obstacle in self.obstacles:
                 obstacle.run()
                 obstacle.draw()
@@ -37,6 +42,14 @@ class Game:
                 if obstacle.rect1.x < -10:
                     # Remove any obstacle that has been out of the screen.
                     self.obstacles.remove(obstacle)
+
+            # These 2 lines are supposed to show a scoreboard.
+            text = self.font.render(str(self.score), False, (255, 255, 255))
+            shadow = self.shadowFont.render(str(self.score), False, (0, 0 , 0))
+
+            self.screen.blit(shadow, (400, 40))
+            self.screen.blit(text, (400, 40))
+
 
             self.bird.draw()
             pygame.display.flip()
