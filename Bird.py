@@ -7,12 +7,12 @@ class Bird:
         # Initialize the bird
         self.x = 70
         self.y = 280
-        self.width = 15
+        self.width = 35
         self.screen = screen
 
         self.color = (0, 0, 0)
 
-        self.falling_speed = 5
+        self.falling_speed = 6
         # Create the rect of the bird
         self.rect = pygame.Rect(self.x, self.y, self.width, self.width)
 
@@ -26,4 +26,7 @@ class Bird:
 
     def rise(self):
         # Triggers whenever the SPACE KEY is pressed.
-        self.y -= 50
+        if self.y - 75 < 35:
+            self.y -= self.y - 15
+        else:
+            self.y -= 75
