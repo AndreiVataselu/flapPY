@@ -3,6 +3,7 @@ from Bird import Bird
 import game_functions as gf
 from pygame.sprite import Group
 import Screens as show_screen
+from Database import Database
 
 
 class Game:
@@ -12,6 +13,7 @@ class Game:
         self.SPLASH_SCREEN = True
         self.GAME_STARTED = False
         self.GAME_LOST = False
+        self.database = Database()
 
         pygame.init()
         self.screen = pygame.display.set_mode((800, 600))
@@ -55,7 +57,17 @@ class Game:
                 show_screen.splash_screen(self.screen)
 
             elif self.GAME_LOST:
-                show_screen.lost_screen(self.screen, self.score)
+                if self.database.exists():
+                    # Update the high score from the DB.
+                    if self.score > self.database.get_highscore():
+                        self.database.update_highscore(self.score)
+                        print("Score updated: {0}".format(self.database.get_highscore()))
+                else:
+                    # Create a DB if it doesn't exist
+                    self.database.insert_highscore(self.score)
+                    print("Score added!")
+
+                show_screen.lost_screen(self.screen, self.score, self.database.get_highscore())
 
             gf.check_collision(self.bird, self.obstacles)
             gf.score_update(self.obstacles)

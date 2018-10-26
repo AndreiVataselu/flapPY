@@ -19,19 +19,17 @@ def splash_screen(screen):
     screen.blit(description, (70, 383))
 
 
-def lost_screen(screen, score):
+def lost_screen(screen, score, highscore):
 
-    yourScoreFont = pygame.font.Font("impact.ttf", 100)
-    yourScore = yourScoreFont.render("Your score", False, (255, 255, 255))
+    yourScoreFont = pygame.font.Font("impact.ttf", 70)
+    yourScore = yourScoreFont.render("Your score: {0}".format(str(score)), False, (255, 255, 255))
 
-    scoreFont = pygame.font.Font("impact.ttf", 158)
-
-    scoreW = scoreFont.render(str(score), False, (255, 255, 255))
-    scoreRect = scoreW.get_rect(center=(400, 300))
+    highScoreFont = pygame.font.Font("impact.ttf", 70)
+    highScore = highScoreFont.render("High score: {0}".format(str(highscore)), False, (255, 255, 255))
 
     descriptionFont = pygame.font.Font("impact.ttf", 70)
-    description = descriptionFont.render("Press space bar to start",  False, (255, 255, 255))
+    description = descriptionFont.render("Press space to restart",  False, (255, 255, 255))
 
-    screen.blit(description, (70, 383))
-    screen.blit(yourScore, (175, 50))
-    screen.blit(scoreW, scoreRect)
+    screen.blit(description, (85, 383))
+    screen.blit(yourScore, (200, 100))
+    screen.blit(highScore, (200, 200))

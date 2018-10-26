@@ -37,8 +37,6 @@ def check_collision(bird, obstacles):
             if obstacle.rect1.x < bird.rect.x:
                 if bird.y - bird.width + 1 < obstacle.rect1.height or \
                         bird.y + bird.width - 1 > obstacle.rect2.y:
-                    print("Bird Y: {0}\nRect1.Height:{1}\nRect2.Y: {2}"
-                          .format(bird.y, obstacle.rect1.height, obstacle.rect2.y))
                     game.GAME_LOST = True
                     game.GAME_STARTED = False
                     bird.falling_speed = 25
